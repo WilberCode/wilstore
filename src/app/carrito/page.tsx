@@ -10,7 +10,7 @@ import Form from "../components/organisms/Form"
 
 
 /* AdBlock */
-const pageCart = () => {   
+const PageCart = () => {   
   const [products, setProducts] = useState([])
   const {cartProducts,addProduct, removeProduct,removeProductCart,clearCart} = useContext(cartContext)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -26,6 +26,7 @@ const pageCart = () => {
       axios.post('/api/cart',{ids:cartProducts}).then((res =>setProducts( res.data))) 
      } else{
       setProducts([]) 
+      clearCart()
      } 
   }, [cartProducts])
 
@@ -148,4 +149,4 @@ const pageCart = () => {
   ) 
 }
 
-export default pageCart
+export default PageCart
