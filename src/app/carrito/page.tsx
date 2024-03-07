@@ -26,7 +26,7 @@ const PageCart = () => {
       axios.post('/api/cart',{ids:cartProducts}).then((res =>setProducts( res.data))) 
      } else{
       setProducts([]) 
-      clearCart()
+     /*  clearCart() */
      } 
   }, [cartProducts])
 

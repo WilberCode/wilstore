@@ -21,15 +21,14 @@ export default async function handler(
 
 
 
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_76a30a2d84427dfd7e769cc26028151e66e8dd5a1d93a7df8c6a0133ce8d8caf";
+// This is your Stripe CLI webhook secret for testing your endpoint locally. 
  
   const sig = req.headers['stripe-signature'];
 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(await buffer(req) , sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(await buffer(req) , sig, process.env.ENDPOINTSECRET);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
