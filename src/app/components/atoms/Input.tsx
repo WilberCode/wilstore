@@ -24,7 +24,7 @@ const Input = ({handleChange,name, value, placeholder,type,required}:InputProps)
             {input_field} 
           </div>
           )
-          }
+          }  
         </label>   
   ) 
 }
