@@ -12,7 +12,7 @@ const parseProducts = (products:ProductProps|ProductProps[])=>{
 export default async function Home() {
 
   await mongooseConnect()
-  const featured_product_data = await Product.findById('654ea1e85656b78516823c6a')   
+  const featured_product_data = await Product.findById('669b491db0cc8ed9abb8760d')   
   const featured_product =  parseProducts(featured_product_data)
 
   const new_products_data = await Product.find({},null,{sort:{'_id':-1}, limit:8})   
