@@ -4,15 +4,15 @@ import Button from "../components/atoms/Button"
 import { ArchiveBoxXMarkIcon, MinusCircleIcon, MinusIcon, PlusCircleIcon, PlusIcon } from "@heroicons/react/24/outline"
 import { cartContext } from "../components/organisms/CartContext"
 import axios from "axios"
-import { Order, ProductProps } from "../../../typing" 
+import { CartContextType, Order, ProductProps } from "../../../typing" 
 import ButtonLink from "../components/atoms/ButtonLink" 
 import Form from "../components/organisms/Form" 
 
 
 /* AdBlock */
 const PageCart = () => {   
-  const [products, setProducts] = useState([])
-  const {cartProducts,addProduct, removeProduct,removeProductCart,clearCart} = useContext(cartContext)
+  const [products, setProducts] = useState<ProductProps[]>([])
+  const {cartProducts,addProduct, removeProduct,removeProductCart,clearCart} = useContext(cartContext) as CartContextType
   const [isSuccess, setIsSuccess] = useState(false)
     
   const [orders, setOrders] = useState<Order[]>([])
@@ -45,16 +45,18 @@ const PageCart = () => {
   let total =  0;
   
   for (const productId  of cartProducts) {
-      const price = products.find(p => p._id === productId)?.price || 0
+      const product =  products.find((p:ProductProps)=> p._id === productId)
+      const price = product?.price || 0; // Si product es undefined, price será 0 
       total += price
   }
 
 
 
 
-  let thRef = useRef(null)
+  let thRef = useRef<HTMLTableRowElement>(null);
   const setTextTd = (index:number)=>{
-    return thRef?.current?.cells?.[index].innerText
+    return thRef.current?.cells?.[index].innerText || '';
+
   }
  
   
@@ -106,9 +108,9 @@ const PageCart = () => {
                   <td className="max-sm:font-semibold" data-title={'Producto'}>#{index+1}</td>
                   <td data-title={setTextTd(1)} > <img className="w-full max-w-[80px]" src={product?.images[0]} alt="imagagen" /> </td>
                   <td data-title={setTextTd(2)} >{product?.name}</td>
-                  <td data-title={setTextTd(3)} > <div  className="flex items-center" ><Button onClick={()=>lessOfThisProduct(product._id)} $primary $outline $md><MinusIcon/></Button> <span  className="px-2" >{ cartProducts?.filter(p=> p === product._id ).length}</span> <Button onClick={()=>moreOfThisProduct(product._id)} $primary $outline $md ><PlusIcon/></Button></div>  </td> 
-                  <td data-title={setTextTd(4)} > <span className="whitespace-nowrap" >S/ { (cartProducts?.filter((p:string)=> p === product._id ).length * product.price)}</span> </td>
-                  <td data-title={setTextTd(5)} > <Button onClick={()=>removeProductOfCart(product._id)} $default > <ArchiveBoxXMarkIcon/>  </Button> </td>
+                  <td data-title={setTextTd(3)} > <div  className="flex items-center" ><Button onClick={()=>lessOfThisProduct(product._id!)} $primary $outline $md><MinusIcon/></Button> <span  className="px-2" >{ cartProducts?.filter(p=> p === product._id ).length}</span> <Button onClick={()=>moreOfThisProduct(product._id!)} $primary $outline $md ><PlusIcon/></Button></div>  </td> 
+                  <td data-title={setTextTd(4)} > <span className="whitespace-nowrap" >S/ { (cartProducts?.filter((p:string)=> p === product._id ).length * product.price!)}</span> </td>
+                  <td data-title={setTextTd(5)} > <Button onClick={()=>removeProductOfCart(product._id!)} $default > <ArchiveBoxXMarkIcon/>  </Button> </td>
                 </tr> 
               ))  }
                <tr> 
@@ -139,7 +141,7 @@ const PageCart = () => {
             
                {   orders.length  > 0 &&   <Form type={true} order={{...orders[0]}} products={products} cartProducts={cartProducts} />    } 
               
-              { !(orders.length > 0)  &&  <Form type={true} order={[]} products={products} cartProducts={cartProducts} />}
+              { !(orders.length > 0)  &&  <Form type={true} products={products} cartProducts={cartProducts} />}
           
          </div>
        </div>

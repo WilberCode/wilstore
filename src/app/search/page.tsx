@@ -10,7 +10,7 @@ type formProps = {
     search:string;
 }
  
-const pageSearch = () => {
+const PageSearch = () => {
   const {form ,handleChange}  =  useForm<formProps>({ search:''})
   const [products, setProducts] = useState<ProductProps[]>([])
   useEffect(() => {
@@ -18,7 +18,7 @@ const pageSearch = () => {
   }, [0])
 
   let searchProducts = []
-  searchProducts =  products.filter(product => product.name.toLowerCase().includes(form.search.toLowerCase()))
+  searchProducts =  products.filter((product:ProductProps ) => product?.name?.toLowerCase().includes(form.search.toLowerCase()))
 
   return (
     <div>
@@ -38,4 +38,4 @@ const pageSearch = () => {
   )
 }
 
-export default pageSearch
+export default PageSearch

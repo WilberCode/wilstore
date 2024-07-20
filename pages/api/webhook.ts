@@ -29,7 +29,7 @@ export default async function handler(
 
   try {
     event = stripe.webhooks.constructEvent(await buffer(req) , sig, process.env.ENDPOINTSECRET);
-  } catch (err) {
+  } catch (err: any) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }

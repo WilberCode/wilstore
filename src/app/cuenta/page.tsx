@@ -10,7 +10,7 @@ import Button from "../components/atoms/Button"
 import Product from "../components/molecules/Product"  
 import isLogin from "../../../utils/isLogin" 
 /* AdBlock */
-const pageAccount = () => {    
+const PageAccount = () => {    
   const session = isLogin() 
  /*  const dsw =  
   if (!isLogin()) return; */
@@ -91,7 +91,7 @@ const pageAccount = () => {
               <h2 className="text-h3" >Información de compra</h2>
                {/*  {orders?.length > 0 && <Form order={orders[0]}/>} */}
               {  orders.length > 0  &&<Form order={orders[0]}/>}
-              { !(orders.length > 0)  &&<Form order={[]}/>}
+              { !(orders.length > 0)  &&<Form />}
           </Box> 
        </div>
      </div>
@@ -100,4 +100,4 @@ const pageAccount = () => {
   ) 
 }
 
-export default pageAccount
+export default PageAccount

@@ -13,7 +13,7 @@ import CartModal from "../organisms/CartModal";
 const Product = ({ _id, images, name, price }: ProductProps) => { 
   const {addProduct} = useContext<any>(cartContext)   
   const {inWishlList,addWishList,removeWishList} = useContext<any>(wishlistContext)   
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState<boolean>(false)
   const [product, setProduct] = useState({_id, images, name, price })
   const AddToCart = (e:any) => {
     e.preventDefault();

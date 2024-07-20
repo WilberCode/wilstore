@@ -18,7 +18,7 @@ type formProps = {
 type formPropsCom = {
     products?: any;
     cartProducts?:any;
-    order?:Order;
+    order?:Order | undefined;
     type?:boolean;
 }
 const Form = ({products, cartProducts,order,type}:formPropsCom) => {
@@ -56,7 +56,7 @@ const Form = ({products, cartProducts,order,type}:formPropsCom) => {
                 window.location = urlPay
             } 
         }else{
-            await axios.put('/api/checkout',{ ...formData,_id: order._id})
+            await axios.put('/api/checkout',{ ...formData,_id: order?._id})
            
         }
        

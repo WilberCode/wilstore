@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react" 
+import { ProductProps } from "../../../../typing"
 
  
 const ProductsCart = () => {
@@ -24,8 +25,8 @@ const ProductsCart = () => {
         </tr> 
         </thead>
         <tbody>
-          {cartProducts.map((product) =>(
-            <tr>
+          {cartProducts.map((product:ProductProps) =>(
+            <tr key={product._id} >
               <td>{product?.name}</td>
             </tr>
           )) } 

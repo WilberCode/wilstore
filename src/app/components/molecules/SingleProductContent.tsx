@@ -4,12 +4,13 @@ import Button from "../atoms/Button"
 import { cartContext } from "../organisms/CartContext"
 import {  ShoppingCartIcon } from "@heroicons/react/24/outline"
 import CartModal from "../organisms/CartModal"
+import { CartContextType } from "../../../../typing"
 
  
 const SingleProductContent = ({product}:any) => {
  
     
-  const {cartProducts,addProduct } = useContext(cartContext) 
+  const {cartProducts,addProduct } = useContext(cartContext)  as CartContextType
   const [modal, setModal] = useState(false)
 
 /*   const hangler = ()=>{

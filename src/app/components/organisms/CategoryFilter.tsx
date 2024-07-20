@@ -34,13 +34,13 @@ const CategoryFilter = ({category,products}:Props) => {
         setProductsOrdered(prev=> [...prev].sort((a:ProductProps,b:ProductProps)=> (
             (form.order==='newest' && new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()) || 
             (form.order==='oldest' &&  new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()) || 
-            (form.order==='lowestprice' && a.price - b.price) || 
-            (form.order==='highestprice' && b.price - a.price) || 0 )))
+            (form.order==='lowestprice' && a.price! - b.price!) || 
+            (form.order==='highestprice' && b.price! - a.price!) || 0 )))
     }, [form.order]) 
     
     const prodcutsFilter = productsOrdered.filter(p=> ((!form.color || p.properties.color === form.color) && (!form[almacenamientoGB] || p.properties[almacenamientoGB] === form[almacenamientoGB])))  
  
-    const selectRef = useRef(null)
+    const selectRef = useRef<HTMLSelectElement>(null);
   
    const handler = ()=>{
 

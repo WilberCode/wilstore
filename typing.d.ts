@@ -22,6 +22,7 @@ export type Category = {
     _id:        string;
     name:       string;
     properties: Property[];
+    parent?:Object;
 }
 
 export type Property = {
@@ -64,4 +65,22 @@ export type WishlistProps = {
   user:string;
   products: any | productsProps[]; 
   __v: number;
+}
+
+
+declare global {
+  namespace NodeJS {
+    interface Global {
+      _mongoClientPromise?: Promise<MongoClient>;
+    }
+  }
+}
+
+export type CartContextType = {
+  cartProducts: any[];
+  setCartProducts: (products: any[]) => void;
+  addProduct: (productId: string) => void;
+  removeProduct: (productId: string) => void;
+  removeProductCart: (productId: string) => void;
+  clearCart: () => void;
 }

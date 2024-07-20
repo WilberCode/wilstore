@@ -5,6 +5,7 @@ import clientPromise from '../../../lib/mongodb'
 import { MongoDBAdapter } from '@auth/mongodb-adapter' 
 import { useRouter } from 'next/navigation'
 import { redirect } from 'next/navigation'
+import { NextRequest, NextResponse } from 'next/server'
 
 const adminEmails = ['deivisspariona@gmail.com']
 export const authOptions = {
@@ -26,7 +27,7 @@ export const authOptions = {
   },
   adapter: MongoDBAdapter(clientPromise),
   callbacks:{
-    session: ({session,token,user})=>{ 
+    session: ({session,token,user}:any)=>{ 
       /* if (!adminEmails.includes(session?.user?.email)) return false; */
       return session;   
     }
@@ -37,7 +38,7 @@ export const authOptions = {
 
 export default NextAuth(authOptions)
 
-export  async function currentSession(req,res){
+export  async function currentSession(req:any,res:any){
   const session = await getServerSession(req,res,authOptions);
   /* if (!adminEmails.includes(session?.user?.email)) { */
      /*  res.status(401);
@@ -48,7 +49,7 @@ export  async function currentSession(req,res){
  return session
 }
 
-export  async function isLogiInApi(req,res){
+export  async function isLogiInApi(req:any,res:any){
   const session = await getServerSession(req,res,authOptions); 
   if (!session){
     return  

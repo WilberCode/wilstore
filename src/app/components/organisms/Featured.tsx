@@ -2,7 +2,7 @@
  
 import Button from "../atoms/Button";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";  
-import { ProductProps } from "../../../../typing";
+import { CartContextType, ProductProps } from "../../../../typing";
 import ButtonLink from "../atoms/ButtonLink"; 
 import { useContext } from "react";
 import { cartContext } from "./CartContext";
@@ -11,9 +11,9 @@ type Props = {
   product: ProductProps
 }
 const Featured =   ({product}:Props) => { 
-  const {addProduct} = useContext(cartContext)
+  const {addProduct} = useContext(cartContext) as CartContextType
   const addFeaturedProduct =  ()=>{
-    addProduct(product._id)
+    addProduct(product._id!)
   }
   return (
     <section  className="bg-blue-600" >  

@@ -2,13 +2,12 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
-import { CartContextType } from "../../../../typing";
- 
-export const cartContext =  createContext<CartContextType | undefined>(undefined);
- 
+
+export const cartContext = createContext({});
+
 const CartContext = ({ children }: any) => {
   const ls = typeof window !== "undefined" ? window.localStorage : null;
-  const [cartProducts, setCartProducts] = useState<String[]>([]);
+  const [cartProducts, setCartProducts] = useState([]);
  
  
   useEffect(() => {
@@ -24,12 +23,12 @@ const CartContext = ({ children }: any) => {
     }
   }, [])
 
-  const addProduct = (productId: string) => {  
+  const addProduct = (productId: never) => {  
       setCartProducts([...cartProducts, productId]); 
   };
  
 
-  const removeProduct = (productId:string) =>{    
+  const removeProduct = (productId:never) =>{    
     if(cartProducts.length === 1 && ls && ls?.getItem('cart')){ 
       const cart:any = []
       ls?.setItem('cart',JSON.stringify(cart)) 

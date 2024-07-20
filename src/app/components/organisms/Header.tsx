@@ -8,6 +8,7 @@ import { cartContext } from "./CartContext"
 import { ArrowDownIcon, Bars3Icon, ChevronDownIcon, MagnifyingGlassIcon, UserCircleIcon, XMarkIcon } from "@heroicons/react/24/outline"
 import { signIn, signOut, useSession } from "next-auth/react" 
 import ButtonLink from "../atoms/ButtonLink"
+import { CartContextType } from "../../../../typing"
 
  
 
@@ -19,15 +20,15 @@ const Header = () => {
   const currentPath = (link_name:string)=>{ 
       return  current_path?.includes(link_name ) 
   } 
-  const {cartProducts} = useContext(cartContext) 
+  const {cartProducts} = useContext(cartContext)  as CartContextType
   const [showNav, setShowNav] = useState(false)
-  const navRef = useRef(null) 
-  const navMenuRef = useRef(null)
+  const navMenuRef = useRef<HTMLUListElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const toggleShowNav = ()=>{
     setShowNav(!showNav)
     const  nav_content_ref = navMenuRef.current
-    if (nav_content_ref) {
+    if (nav_content_ref && navRef.current) {
       const heightUsingOffsetHeight = nav_content_ref.offsetHeight;
       navRef.current.style.height  = heightUsingOffsetHeight+'px' ;  
       }  

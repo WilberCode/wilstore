@@ -2,29 +2,30 @@
 import { CheckBadgeIcon, CheckCircleIcon, MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline"  
 import ButtonLink from "../atoms/ButtonLink"
 import ReactDOM from 'react-dom'
-import { ProductProps } from "../../../../typing"
+import { CartContextType, ProductProps } from "../../../../typing"
 import Button from "../atoms/Button"
 import { useContext } from "react"
 import { cartContext } from "./CartContext"
 
  type CartModalProps = {
     isOpen?:boolean;
-    setModal?:(data:boolean)=> void;
+    setModal?:React.Dispatch<React.SetStateAction<boolean>>;
     product?:ProductProps;
  }
-const CartModal = ({isOpen,setModal,product}:CartModalProps) => { 
+ const CartModal = ({isOpen,setModal,product}:CartModalProps) => { 
+  
+  const {cartProducts,addProduct, removeProduct,removeProductCart,clearCart} = useContext(cartContext) as CartContextType
   if ( !isOpen || typeof document === 'undefined') {
     return ; // No renderizar nada si el modal no está abierto o si no está en el navegador
   }
 
-    const {cartProducts,addProduct, removeProduct,removeProductCart,clearCart} = useContext(cartContext)
-   const moreOfThisProduct = (id:string) =>{   
+    const moreOfThisProduct = (id:string) =>{   
       addProduct(id)
   }
   const lessOfThisProduct = (id:string) =>{    
       removeProduct(id)  
   }
-  if (cartProducts.length===0 ) {
+  if (cartProducts.length === 0 && setModal) { 
     setModal(false)
  } 
   return ReactDOM.createPortal(
@@ -35,7 +36,7 @@ const CartModal = ({isOpen,setModal,product}:CartModalProps) => {
                 <CheckCircleIcon  className="w-8 text-green-600 " />
                 <span  >Lo que llevas en tu Carrito</span>
              </div>
-             <button onClick={()=>setModal(false)} >
+             <button onClick={()=> setModal && setModal(false)} >
                 <XMarkIcon  className="w-5 text-gray-400"/>
              </button> 
           </div> 
@@ -53,7 +54,7 @@ const CartModal = ({isOpen,setModal,product}:CartModalProps) => {
                   <var className="not-italic whitespace-nowrap " >S/. {product?.price}</var>
                 </div>
                 <div  className="flex-grow flex items-center" > 
-                  <div  className="flex items-center" ><Button onClick={()=>lessOfThisProduct(product?._id)} $primary $outline $md><MinusIcon/></Button> <span  className="px-2" >{ cartProducts?.filter(p=> p === product?._id ).length}</span> <Button onClick={()=>moreOfThisProduct(product?._id)} $primary $outline $md ><PlusIcon/></Button></div> 
+                  <div  className="flex items-center" ><Button onClick={()=>lessOfThisProduct(product?._id!)} $primary $outline $md><MinusIcon/></Button> <span  className="px-2" >{ cartProducts?.filter(p=> p === product?._id ).length}</span> <Button onClick={()=>moreOfThisProduct(product?._id!)} $primary $outline $md ><PlusIcon/></Button></div> 
                   <span className="text-xs whitespace-nowrap ml-2 text-gray-500 " >Máximo 24 unidades</span>
                 </div>
               </div>
@@ -61,7 +62,7 @@ const CartModal = ({isOpen,setModal,product}:CartModalProps) => {
           </div> 
           <div className="flex justify-end py-3 bg-gray-50  px-6" >
             <div>
-                <button className="border-b border-gray-800 mr-6 text-sm "  onClick={()=>setModal(false)}  >Siguir comprando</button> 
+                <button className="border-b border-gray-800 mr-6 text-sm "  onClick={()=>setModal && setModal(false)}  >Siguir comprando</button> 
                 <ButtonLink  $default $md href="/carrito" >Ir al Carrito</ButtonLink> 
             </div> 
           </div>

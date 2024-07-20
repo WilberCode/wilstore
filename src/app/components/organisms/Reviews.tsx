@@ -29,7 +29,7 @@ const Reviews = ({product, reviews}:ReviewsProps) => {
      const [rating, setRating] = useState(0);
      const [reviewsAll, setReviewsAll] = useState<Review[]>(reviews);
 
-     const ratingRef =  useRef(null)
+     const ratingRef =  useRef<HTMLInputElement>(null)
     const sendReview = async(e:FormEvent<HTMLFormElement>)=>{
     
         e.preventDefault(); 
